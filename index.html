@@ -5,55 +5,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="Rsv Rockey" />
   <title>The Witcher Universe Timeline</title>
+
+  <!-- Bootstrap CSS for base styling -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Animate On Scroll CSS -->
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Particles.js -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+  <!-- Anime.js for animations (optional) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
   <style>
-    /* CSS Variables for light/dark mode */
+    /* ========== CSS Variables for Dark and Light Themes ========== */
     :root {
+      /* Dark mode colors */
       --bg-dark: #0b0f1a;
-      --bg-light: #e6eaf0;
       --text-dark: #f5f5f5;
-      --text-light: #222222;
       --primary-dark: #f5b041;
-      --primary-light: #d9822b;
       --glass-bg-dark: rgba(255, 255, 255, 0.07);
-      --glass-bg-light: rgba(255, 255, 255, 0.3);
       --glass-shadow-dark: rgba(31, 38, 135, 0.3);
-      --glass-shadow-light: rgba(0, 0, 0, 0.1);
       --table-header-bg-dark: rgba(31, 42, 68, 0.9);
-      --table-header-bg-light: rgba(200, 200, 200, 0.9);
       --table-row-hover-dark: rgba(255, 255, 255, 0.03);
-      --table-row-hover-light: rgba(0, 0, 0, 0.04);
       --border-dark: #222;
+
+      /* Light mode colors */
+      --bg-light: #e6eaf0;
+      --text-light: #222222;
+      --primary-light: #d9822b;
+      --glass-bg-light: rgba(255, 255, 255, 0.3);
+      --glass-shadow-light: rgba(0, 0, 0, 0.1);
+      --table-header-bg-light: rgba(200, 200, 200, 0.9);
+      --table-row-hover-light: rgba(0, 0, 0, 0.04);
       --border-light: #ccc;
     }
 
-    /* Base styling */
+    /* ========== Base Styles and Layout ========== */
     body {
       margin: 0;
-      padding: 0;
+      padding: 1rem;
       background: var(--bg-dark);
       color: var(--text-dark);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       overflow-x: hidden;
-      transition: background-color 0.4s ease, color 0.4s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 1rem;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
 
-    /* Light mode */
+    /* Light mode overrides */
     body.light-mode {
       background: var(--bg-light);
       color: var(--text-light);
     }
 
-    /* Glass morph container */
-    header, .container.glass-box, footer {
+    /* ========== Glass Morph Containers (header, main container, footer) ========== */
+    header,
+    .container.glass-box,
+    footer {
       max-width: 1000px;
       width: 100%;
       background: var(--glass-bg-dark);
@@ -72,7 +85,7 @@
       box-shadow: 0 8px 32px var(--glass-shadow-light);
     }
 
-    /* Header */
+    /* ========== Header Styling ========== */
     header {
       text-align: center;
     }
@@ -100,7 +113,7 @@
       color: #555;
     }
 
-    /* Dark/Light toggle button */
+    /* ========== Dark / Light Mode Toggle Button ========== */
     #mode-toggle {
       cursor: pointer;
       background: transparent;
@@ -128,7 +141,7 @@
       color: #fff;
     }
 
-    /* Timeline graph container */
+    /* ========== Timeline Graph Container ========== */
     #timeline-graph {
       width: 100%;
       height: 150px;
@@ -136,11 +149,12 @@
       user-select: none;
     }
 
-    /* Table container with horizontal scroll */
+    /* ========== Table Responsive Scroll Container ========== */
     .table-responsive {
       overflow-x: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--primary-dark) transparent;
+      outline: none;
     }
     .table-responsive::-webkit-scrollbar {
       height: 8px;
@@ -156,7 +170,7 @@
       background-color: var(--primary-light);
     }
 
-    /* Table styles */
+    /* ========== Table Styles ========== */
     table {
       min-width: 700px;
       border-collapse: separate;
@@ -199,7 +213,7 @@
       white-space: normal;
     }
 
-    /* Footer */
+    /* ========== Footer Styles ========== */
     footer {
       text-align: center;
       color: var(--text-dark);
@@ -219,7 +233,7 @@
       border-color: var(--border-light);
     }
 
-    /* Responsive typography */
+    /* ========== Responsive Typography ========== */
     @media (max-width: 768px) {
       header h1 {
         font-size: 2.6rem;
@@ -242,19 +256,35 @@
   </style>
 </head>
 <body>
+  <!-- Particles.js background container -->
   <div id="particles-js"></div>
 
+  <!-- Page Header -->
   <header data-aos="fade-down" aria-label="Page header">
     <h1>The Witcher Universe Timeline</h1>
     <p class="lead">Books + Netflix Series + Games</p>
-    <button id="mode-toggle" aria-pressed="false" aria-label="Toggle dark and light mode">Switch to Light Mode</button>
+
+    <!-- Dark/Light Mode Toggle Button -->
+    <button
+      id="mode-toggle"
+      aria-pressed="false"
+      aria-label="Toggle dark and light mode"
+      type="button"
+    >
+      Switch to Light Mode
+    </button>
   </header>
 
-  <!-- Interactive timeline graph -->
+  <!-- Interactive Timeline Graph (Canvas) -->
   <div id="timeline-graph" aria-hidden="true"></div>
 
+  <!-- Main Content Container with Glass Morph -->
   <main class="container glass-box" data-aos="fade-up" role="main">
-    <div class="table-responsive" tabindex="0" aria-label="Witcher Universe timeline table">
+    <div
+      class="table-responsive"
+      tabindex="0"
+      aria-label="Witcher Universe timeline table"
+    >
       <table class="table table-dark table-striped timeline-table">
         <thead>
           <tr>
@@ -267,61 +297,106 @@
           <tr>
             <td>Ancient Times</td>
             <td>Lore</td>
-            <td>- Elder Blood is passed through Lara Dorren.<br>- The Conjunction of the Spheres merges monsters, magic, and humans into one world.</td>
+            <td>
+              - Elder Blood is passed through Lara Dorren.<br />
+              - The Conjunction of the Spheres merges monsters, magic, and humans
+              into one world.
+            </td>
           </tr>
           <tr>
             <td>~1230s</td>
             <td>🎮 Netflix S1 (Yen's arc)</td>
-            <td>- Yennefer is born, transformed at Aretuza.<br>- Becomes a powerful sorceress after decades of manipulation and pain.</td>
+            <td>
+              - Yennefer is born, transformed at Aretuza.<br />
+              - Becomes a powerful sorceress after decades of manipulation and
+              pain.
+            </td>
           </tr>
           <tr>
             <td>~1240s–1250s</td>
             <td>🎮 Netflix S1–2, 📙 The Last Wish / Sword of Destiny</td>
-            <td>- Geralt hunts monsters.<br>- Destiny links him to Ciri via the Law of Surprise.<br>- Geralt meets Yennefer.<br>- Nilfgaard invades Cintra, Ciri flees.</td>
+            <td>
+              - Geralt hunts monsters.<br />
+              - Destiny links him to Ciri via the Law of Surprise.<br />
+              - Geralt meets Yennefer.<br />
+              - Nilfgaard invades Cintra, Ciri flees.
+            </td>
           </tr>
           <tr>
             <td>~1263</td>
             <td>🎮 Netflix S3, 📙 Time of Contempt</td>
-            <td>- Ciri is trained at Kaer Morhen.<br>- Coup at Aretuza, mages scatter.<br>- Ciri opens a portal, ends up in the desert.<br>- Wild Hunt teased.</td>
+            <td>
+              - Ciri is trained at Kaer Morhen.<br />
+              - Coup at Aretuza, mages scatter.<br />
+              - Ciri opens a portal, ends up in the desert.<br />
+              - Wild Hunt teased.
+            </td>
           </tr>
           <tr>
             <td>~1264–1268</td>
             <td>📙 Baptism of Fire → Lady of the Lake</td>
-            <td>- Geralt forms a company to find Ciri.<br>- Ciri becomes a bandit (“Falka”), then lands in another world.<br>- Books end with Geralt and Yennefer possibly dying in Rivia pogrom, Ciri vanishes into other realms.</td>
+            <td>
+              - Geralt forms a company to find Ciri.<br />
+              - Ciri becomes a bandit (“Falka”), then lands in another world.<br />
+              - Books end with Geralt and Yennefer possibly dying in Rivia pogrom,
+              Ciri vanishes into other realms.
+            </td>
           </tr>
           <tr>
             <td>~1270</td>
             <td>🎮 The Witcher 1</td>
-            <td>- Geralt is resurrected with amnesia.<br>- Kaer Morhen attacked by Salamandra.<br>- Geralt kills their leader and saves King Foltest.</td>
+            <td>
+              - Geralt is resurrected with amnesia.<br />
+              - Kaer Morhen attacked by Salamandra.<br />
+              - Geralt kills their leader and saves King Foltest.
+            </td>
           </tr>
           <tr>
             <td>1271</td>
             <td>🎮 The Witcher 2: Assassins of Kings</td>
-            <td>- Foltest is assassinated; Geralt is framed.<br>- He hunts Letho, another Witcher.<br>- North is destabilized.<br>- Geralt starts regaining memories.</td>
+            <td>
+              - Foltest is assassinated; Geralt is framed.<br />
+              - He hunts Letho, another Witcher.<br />
+              - North is destabilized.<br />
+              - Geralt starts regaining memories.
+            </td>
           </tr>
           <tr>
             <td>1272</td>
             <td>🎮 The Witcher 3: Wild Hunt</td>
-            <td>- Geralt searches for Ciri, who is hunted by the Wild Hunt.<br>- Travels across Velen, Novigrad, Skellige.<br>- Ciri returns, confronts the Wild Hunt.<br>- Depending on choices, Ciri becomes Witcher, Empress, or disappears.</td>
+            <td>
+              - Geralt searches for Ciri, who is hunted by the Wild Hunt.<br />
+              - Travels across Velen, Novigrad, Skellige.<br />
+              - Ciri returns, confronts the Wild Hunt.<br />
+              - Depending on choices, Ciri becomes Witcher, Empress, or disappears.
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </main>
 
+  <!-- Footer -->
   <footer data-aos="fade-up" role="contentinfo">
-    <p>&copy; 2025 Rsv Rockey. All rights reserved.<br />
-      Designed and authored by <strong>Rsv Rockey</strong>. Unauthorized reproduction or distribution is prohibited.<br />
+    <p>
+      &copy; 2025 Rsv Rockey. All rights reserved.<br />
+      Designed and authored by <strong>Rsv Rockey</strong>. Unauthorized
+      reproduction or distribution is prohibited.<br />
       Last updated: July 2025
     </p>
   </footer>
 
+  <!-- Bootstrap Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- AOS JS for scroll animations -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
   <script>
+    // Initialize Animate On Scroll (AOS)
     AOS.init();
 
-    // Particles.js setup
+    // Initialize Particles.js with subtle particles
     particlesJS("particles-js", {
       particles: {
         number: { value: 100 },
@@ -334,126 +409,178 @@
       }
     });
 
-    // Dark / Light mode toggle
-    const toggleBtn = document.getElementById('mode-toggle');
+    // Dark / Light mode toggle logic
+    const toggleBtn = document.getElementById("mode-toggle");
     const body = document.body;
 
+    // Function to set mode and update UI accordingly
     function setMode(isLight) {
-      if(isLight) {
-        body.classList.add('light-mode');
-        toggleBtn.textContent = 'Switch to Dark Mode';
-        toggleBtn.setAttribute('aria-pressed', 'true');
+      if (isLight) {
+        body.classList.add("light-mode");
+        toggleBtn.textContent = "Switch to Dark Mode";
+        toggleBtn.setAttribute("aria-pressed", "true");
       } else {
-        body.classList.remove('light-mode');
-        toggleBtn.textContent = 'Switch to Light Mode';
-        toggleBtn.setAttribute('aria-pressed', 'false');
+        body.classList.remove("light-mode");
+        toggleBtn.textContent = "Switch to Light Mode";
+        toggleBtn.setAttribute("aria-pressed", "false");
       }
     }
 
-    // Remember mode in localStorage
-    const savedMode = localStorage.getItem('witcher-mode');
-    if(savedMode === 'light') {
+    // Load saved mode preference from localStorage
+    const savedMode = localStorage.getItem("witcher-mode");
+    if (savedMode === "light") {
       setMode(true);
     } else {
       setMode(false);
     }
 
-    toggleBtn.addEventListener('click', () => {
-      const isLight = body.classList.toggle('light-mode');
+    // Toggle mode on button click and save preference
+    toggleBtn.addEventListener("click", () => {
+      const isLight = body.classList.toggle("light-mode");
       setMode(isLight);
-      localStorage.setItem('witcher-mode', isLight ? 'light' : 'dark');
+      localStorage.setItem("witcher-mode", isLight ? "light" : "dark");
+
+      // Redraw timeline graph in correct mode colors
+      drawGraph(isLight);
     });
 
-    // Interactive timeline graph using Canvas API
-    const graph = document.getElementById('timeline-graph');
-    const ctx = graph.getContext('2d');
+    // ========== Interactive Timeline Graph using Canvas ==========
+
+    // Get the canvas element and 2D context
+    const graph = document.getElementById("timeline-graph");
+    const ctx = graph.getContext("2d");
+
+    // Setup for high DPI screens
     const width = graph.clientWidth;
     const height = graph.clientHeight;
     graph.width = width * devicePixelRatio;
     graph.height = height * devicePixelRatio;
     ctx.scale(devicePixelRatio, devicePixelRatio);
 
-    // Timeline points data (year mapped to relative X position)
+    // Timeline points with relative position (0-1)
     const timelinePoints = [
-      { year: 'Ancient', label: 'Lore', pos: 0.05 },
-      { year: '~1230s', label: 'Netflix S1', pos: 0.15 },
-      { year: '~1240s–1250s', label: 'Books/Show', pos: 0.3 },
-      { year: '~1263', label: 'Netflix S3', pos: 0.5 },
-      { year: '~1264–1268', label: 'Books', pos: 0.65 },
-      { year: '~1270', label: 'Witcher 1', pos: 0.8 },
-      { year: '1271', label: 'Witcher 2', pos: 0.9 },
-      { year: '1272', label: 'Witcher 3', pos: 0.98 },
+      { year: "Ancient", label: "Lore", pos: 0.05 },
+      { year: "~1230s", label: "Netflix S1", pos: 0.15 },
+      { year: "~1240s–1250s", label: "Books/Show", pos: 0.3 },
+      { year: "~1263", label: "Netflix S3", pos: 0.5 },
+      { year: "~1264–1268", label: "Books", pos: 0.65 },
+      { year: "~1270", label: "Witcher 1", pos: 0.8 },
+      { year: "1271", label: "Witcher 2", pos: 0.9 },
+      { year: "1272", label: "Witcher 3", pos: 0.98 },
     ];
 
-    const radius = 12;
+    const radius = 12; // radius of timeline dots
     const lineY = height / 2;
-    const highlightColorDark = '#f5b041';
-    const highlightColorLight = '#d9822b';
+    const highlightColorDark = "#f5b041";
+    const highlightColorLight = "#d9822b";
 
+    // Variable to track hovered dot index
+    let hoverIndex = -1;
+
+    // Draw the timeline graph
     function drawGraph(isLightMode) {
       ctx.clearRect(0, 0, width, height);
 
-      const lineColor = isLightMode ? '#ccc' : '#888';
-      const textColor = isLightMode ? '#222' : '#f5f5f5';
-      const highlightColor = isLightMode ? highlightColorLight : highlightColorDark;
+      const lineColor = isLightMode ? "#ccc" : "#888";
+      const textColor = isLightMode ? "#222" : "#f5f5f5";
+      const highlightColor = isLightMode
+        ? highlightColorLight
+        : highlightColorDark;
 
-      // Draw timeline base line
+      // Draw horizontal timeline base line
       ctx.strokeStyle = lineColor;
       ctx.lineWidth = 4;
-      ctx.lineCap = 'round';
+      ctx.lineCap = "round";
       ctx.beginPath();
       ctx.moveTo(width * 0.03, lineY);
       ctx.lineTo(width * 0.97, lineY);
       ctx.stroke();
 
-      // Draw points
-      timelinePoints.forEach((pt, i) => {
-        const x = width * pt.pos;
+      // Draw each timeline point (circle)
+      timelinePoints.forEach(({ pos }, index) => {
+        const x = width * pos;
+        const y = lineY;
+
+        // Draw circle fill: highlight if hovered
+        ctx.fillStyle = index === hoverIndex ? highlightColor : lineColor;
         ctx.beginPath();
-        ctx.fillStyle = highlightColor;
-        ctx.shadowColor = highlightColor;
-        ctx.shadowBlur = 10;
-        ctx.arc(x, lineY, radius, 0, 2 * Math.PI);
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
         ctx.fill();
-        ctx.shadowBlur = 0;
 
-        // Year label below
-        ctx.fillStyle = textColor;
-        ctx.font = '14px Segoe UI, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(pt.year, x, lineY + 35);
-
-        // Label above point on hover (if any)
-        if (hoverIndex === i) {
-          ctx.fillStyle = highlightColor;
-          ctx.font = 'bold 16px Segoe UI, sans-serif';
-          ctx.fillText(pt.label, x, lineY - 25);
+        // Draw circle stroke for non-hovered dots
+        if (index !== hoverIndex) {
+          ctx.strokeStyle = highlightColor;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(x, y, radius, 0, Math.PI * 2);
+          ctx.stroke();
         }
       });
+
+      // Draw hovered label if any
+      if (hoverIndex !== -1) {
+        const point = timelinePoints[hoverIndex];
+        const x = width * point.pos;
+        const label = `${point.year} — ${point.label}`;
+
+        ctx.font = "16px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+        ctx.fillStyle = highlightColor;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
+
+        // Draw label background with padding and rounded corners
+        const padding = 8;
+        const metrics = ctx.measureText(label);
+        const labelWidth = metrics.width + padding * 2;
+        const labelHeight = 26;
+
+        // Position label slightly above the circle
+        const labelX = x;
+        const labelY = lineY - radius - 12;
+
+        ctx.fillRect(
+          labelX - labelWidth / 2,
+          labelY - labelHeight,
+          labelWidth,
+          labelHeight,
+          10
+        );
+
+        // Draw label text
+        ctx.fillStyle = isLightMode ? "#fff" : "#000";
+        ctx.fillText(label, labelX, labelY - 6);
+      }
     }
 
-    // Track hover index
-    let hoverIndex = -1;
-
-    graph.addEventListener('mousemove', e => {
+    // Event handler to detect hover over timeline points
+    graph.addEventListener("mousemove", (e) => {
       const rect = graph.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
+      const mouseX = (e.clientX - rect.left);
+      const mouseY = (e.clientY - rect.top);
 
-      hoverIndex = timelinePoints.findIndex(pt => {
-        const x = width * pt.pos;
-        return Math.abs(mouseX - x) < radius + 10;
+      hoverIndex = -1;
+
+      timelinePoints.forEach(({ pos }, index) => {
+        const x = width * pos;
+        const y = lineY;
+        const dx = mouseX - x;
+        const dy = mouseY - y;
+        if (Math.sqrt(dx * dx + dy * dy) <= radius + 5) {
+          hoverIndex = index;
+        }
       });
 
-      drawGraph(body.classList.contains('light-mode'));
+      drawGraph(body.classList.contains("light-mode"));
     });
 
-    graph.addEventListener('mouseleave', e => {
+    // Clear hover when mouse leaves
+    graph.addEventListener("mouseleave", () => {
       hoverIndex = -1;
-      drawGraph(body.classList.contains('light-mode'));
+      drawGraph(body.classList.contains("light-mode"));
     });
 
-    // Initial draw
-    drawGraph(body.classList.contains('light-mode'));
+    // Initial draw of timeline graph on page load
+    drawGraph(body.classList.contains("light-mode"));
   </script>
 </body>
 </html>
